@@ -32,7 +32,7 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
 
         this._container.style.cursor = 'crosshair';
 
-        this._updateTooltip();
+        this._updateTooltip && this._updateTooltip();
         this._map.on('mousemove', this._onMouseMove, this);
     },
 
@@ -42,7 +42,7 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
         this._cleanUpShape();
         this._clearGuides();
 
-        this._updateTooltip();
+        this._updateTooltip && this._updateTooltip();
 
         this._map.off('mousemove', this._onMouseMove, this);
         this._container.style.cursor = '';
