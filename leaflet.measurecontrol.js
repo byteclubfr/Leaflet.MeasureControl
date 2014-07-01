@@ -73,6 +73,34 @@ L.Polyline.Measure = L.Draw.Polyline.extend({
             labelText.text = '';
         }
         return labelText;
+    },
+
+    _onZoomEnd: function () {
+        // Disable original behavior
+        // Buggy: this._updateGuide();
+    },
+
+    // Copied original behavior
+    // Not sure why we have to do this, but if we want to override _onZoomEnd,
+    // we need to override this one too.
+    _onMouseMove: function (e) {
+        var newPos = e.layerPoint,
+            latlng = e.latlng;
+
+        // Save latlng
+        // should this be moved to _updateGuide() ?
+        this._currentLatLng = latlng;
+
+        // Update the label
+        this._tooltip.updatePosition(latlng);
+
+        // Update the guide line
+        this._updateGuide(newPos);
+
+        // Update the mouse marker position
+        this._mouseMarker.setLatLng(latlng);
+
+        L.DomEvent.preventDefault(e.originalEvent);
     }
 });
 
